@@ -1,0 +1,408 @@
+{% extends 'datatable/index.html' %}
+
+{% load static %}
+
+{% block title %} Table {% endblock %}
+
+{% block cssblock %}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css"
+    integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.css">
+{% endblock %}
+
+{% block body %}
+<div class="content-wrapper">
+    <div class="row">
+        <div class="col-lg-12 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal"
+                        data-whatever="@getbootstrap">Add Iteam</button>
+
+                    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <form action="{% url 'table' %}" method="post">
+                                    {% csrf_token %}
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Please Fill Detail</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="form-group">
+                                            <label for="title-name" class="col-form-label">Title:</label>
+                                            <input type="text" class="form-control" id="title-name" name="title">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="body-text" class="col-form-label">Body:</label>
+                                            <textarea class="form-control" id="body-text" name="body"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary"
+                                            data-dismiss="modal">Close</button>
+                                        <input type="submit" class="btn btn-primary" value="Save">
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <h1>Articles</h1>
+                    {% for article in articles %}
+                    <ul>
+                        <li><a href="{{ article.get_absolute_url }}">{{ article.title }}</a></li>
+                    </ul>
+                    {% endfor %}
+
+                    <h4 class="card-title">Basic Table</h4>
+                    <div>
+                        <table id="ex" class="display" style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th>Name</th>
+                                    <th>Position</th>
+                                    <th>Office</th>
+                                    <th>Salary</th>
+                                </tr>
+                            </thead>
+                            <tfoot>
+                                <tr>
+                                    <th></th>
+                                    <th>Name</th>
+                                    <th>Position</th>
+                                    <th>Office</th>
+                                    <th>Salary</th>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-12 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Hoverable Table</h4>
+                    <p class="card-description">
+                        Add class <code>.table-hover</code>
+                    </p>
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>User</th>
+                                    <th>Product</th>
+                                    <th>Sale</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Jacob</td>
+                                    <td>Photoshop</td>
+                                    <td class="text-danger"> 28.76% <i class="ti-arrow-down"></i></td>
+                                    <td><label class="badge badge-info">Fixed</label></td>
+                                </tr>
+                                <tr>
+                                    <td>Messsy</td>
+                                    <td>Flash</td>
+                                    <td class="text-danger"> 21.06% <i class="ti-arrow-down"></i></td>
+                                    <td><label class="badge badge-warning">In progress</label></td>
+                                </tr>
+                                <tr>
+                                    <td>John</td>
+                                    <td>Premier</td>
+                                    <td class="text-danger"> 35.00% <i class="ti-arrow-down"></i></td>
+                                    <td><label class="badge badge-info">Fixed</label></td>
+                                </tr>
+                                <tr>
+                                    <td>Peter</td>
+                                    <td>After effects</td>
+                                    <td class="text-success"> 82.00% <i class="ti-arrow-up"></i></td>
+                                    <td><label class="badge badge-success">Completed</label></td>
+                                </tr>
+                                <tr>
+                                    <td>Dave</td>
+                                    <td>53275535</td>
+                                    <td class="text-success"> 98.05% <i class="ti-arrow-up"></i></td>
+                                    <td><label class="badge badge-warning">In progress</label></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-12 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Striped Table</h4>
+                    <p class="card-description">
+                        Add class <code>.table-striped</code>
+                    </p>
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        User
+                                    </th>
+                                    <th>
+                                        First name
+                                    </th>
+                                    <th>
+                                        Progress
+                                    </th>
+                                    <th>
+                                        Amount
+                                    </th>
+                                    <th>
+                                        Deadline
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="py-1">
+                                        <img src="{% static 'images/faces/face1.jpg' %}" alt="image" />
+                                    </td>
+                                    <td>
+                                        Herman Beck
+                                    </td>
+                                    <td>
+                                        <div class="progress">
+                                            <div class="progress-bar bg-success" role="progressbar" style="width: 25%"
+                                                aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        $ 77.99
+                                    </td>
+                                    <td>
+                                        May 15, 2015
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="py-1">
+                                        <img src="{% static 'images/faces/face2.jpg' %}" alt="image" />
+                                    </td>
+                                    <td>
+                                        Messsy Adam
+                                    </td>
+                                    <td>
+                                        <div class="progress">
+                                            <div class="progress-bar bg-danger" role="progressbar" style="width: 75%"
+                                                aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        $245.30
+                                    </td>
+                                    <td>
+                                        July 1, 2015
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="py-1">
+                                        <img src="{% static 'images/faces/face3.jpg' %}" alt="image" />
+                                    </td>
+                                    <td>
+                                        John Richards
+                                    </td>
+                                    <td>
+                                        <div class="progress">
+                                            <div class="progress-bar bg-warning" role="progressbar" style="width: 90%"
+                                                aria-valuenow="90" aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        $138.00
+                                    </td>
+                                    <td>
+                                        Apr 12, 2015
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="py-1">
+                                        <img src="{% static 'images/faces/face4.jpg' %}" alt="image" />
+                                    </td>
+                                    <td>
+                                        Peter Meggik
+                                    </td>
+                                    <td>
+                                        <div class="progress">
+                                            <div class="progress-bar bg-primary" role="progressbar" style="width: 50%"
+                                                aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        $ 77.99
+                                    </td>
+                                    <td>
+                                        May 15, 2015
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="py-1">
+                                        <img src="{% static 'images/faces/face5.jpg' %}" alt="image" />
+                                    </td>
+                                    <td>
+                                        Edward
+                                    </td>
+                                    <td>
+                                        <div class="progress">
+                                            <div class="progress-bar bg-danger" role="progressbar" style="width: 35%"
+                                                aria-valuenow="35" aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        $ 160.25
+                                    </td>
+                                    <td>
+                                        May 03, 2015
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="py-1">
+                                        <img src="{% static 'images/faces/face6.jpg' %}" alt="image" />
+                                    </td>
+                                    <td>
+                                        John Doe
+                                    </td>
+                                    <td>
+                                        <div class="progress">
+                                            <div class="progress-bar bg-info" role="progressbar" style="width: 65%"
+                                                aria-valuenow="65" aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        $ 123.21
+                                    </td>
+                                    <td>
+                                        April 05, 2015
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="py-1">
+                                        <img src="{% static 'images/faces/face7.jpg' %}" alt="image" />
+                                    </td>
+                                    <td>
+                                        Henry Tom
+                                    </td>
+                                    <td>
+                                        <div class="progress">
+                                            <div class="progress-bar bg-warning" role="progressbar" style="width: 20%"
+                                                aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        $ 150.00
+                                    </td>
+                                    <td>
+                                        June 16, 2015
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+{% endblock %}
+
+{% block jsblock %}
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
+    integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+    crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-fQybjgWLrvvRgtW6bFlB7jaZrFsaBXjsOMm/tB9LTS58ONXgqbR9W8oWht/amnpF"
+    crossorigin="anonymous"></script>
+<script type="text/javascript" charset="utf8" src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.js"></script>
+<script>
+    /* Formatting function for row details - modify as you need */
+    function format(d) {
+        // `d` is the original data object for the row
+        return (
+            '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">' +
+            '<tr>' +
+            '<td>Full name:</td>' +
+            '<td>' +
+            d.name +
+            '</td>' +
+            '</tr>' +
+            '<tr>' +
+            '<td>Extension number:</td>' +
+            '<td>' +
+            d.extn +
+            '</td>' +
+            '</tr>' +
+            '<tr>' +
+            '<td>Extra info:</td>' +
+            '<td>And any further details here (images etc)...</td>' +
+            '</tr>' +
+            '</table>'
+        );
+    }
+
+    $(document).ready(function () {
+        var table = $('#ex').DataTable({
+            style: 'os',
+            ajax: '{% static "js/ajax.txt" %}',
+            columns: [
+                {
+                    className: 'dt-control',
+                    orderable: false,
+                    data: null,
+                    defaultContent: '',
+                },
+                { data: 'name' },
+                { data: 'position' },
+                { data: 'office' },
+                { data: 'salary' },
+            ],
+            order: [[1, 'asc']],
+        });
+
+        // Add event listener for opening and closing details
+        $('#ex tbody').on('click', 'td.dt-control', function () {
+            var tr = $(this).closest('tr');
+            var row = table.row(tr);
+
+            if (row.child.isShown()) {
+                // This row is already open - close it
+                row.child.hide();
+                tr.removeClass('shown');
+            } else {
+                // Open this row
+                row.child(format(row.data())).show();
+                tr.addClass('shown');
+            }
+        });
+    });
+            //Table Data
+            //$('#example').DataTable({ data: {{ dataT|safe }}});
+</script>
+<script>
+    $.ajax({
+            type: 'GET',
+            dataType: "json",
+            url: '../api/snippets/?format=json',
+            success: function (data, status, xhr) {
+                console.log('data: ', data);
+            }
+        });
+</script>
+{% endblock %}
