@@ -1,5 +1,5 @@
 from django.urls import path
-from datatable.views import Home, Table, ArticleListView, ArticleDetailView
+from datatable.views import Home, Table, ArticleListView, ArticleDetailView, Ajaxpage
 
 urlpatterns = [
     
@@ -8,5 +8,7 @@ urlpatterns = [
         path('table/', Table.as_view(), name='table'),
         path("avi/<slug:slug>", ArticleDetailView.as_view(), name="article_detail"),
         path("avi/", ArticleListView.as_view(), name="article_list"),
+        path("ajax/", Ajaxpage.as_view(), name="ajaxhtml"),
+        
 
 ]

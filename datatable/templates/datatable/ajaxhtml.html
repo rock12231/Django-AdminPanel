@@ -1,0 +1,171 @@
+{% extends 'datatable/index.html' %}
+
+{% load static %}
+
+{% block title %} Table {% endblock %}
+
+{% block cssblock %}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css">
+<style>
+    .display tr {
+    cursor: pointer;
+}
+    
+</style>
+{% endblock %}
+
+{% block body %}
+
+<h1>hello</h1>
+<table id="example" class="display table-hover" style="width:100%">
+    <thead>
+        <tr>
+            <th>id</th>
+            <th>title</th>
+            <th>code</th>
+            <th>linenos</th>
+            <th>language</th>
+            <th>style</th>
+        </tr>
+    </thead>
+</table>
+<br>
+<br>
+<form id="post-form">
+    {% csrf_token %}
+    <input type="text" placeholder="title" name="title">
+    <br>
+    <input type="text" placeholder="code" name="code">
+    <br>
+    <input type="checkbox" name="linenos">
+    <br>
+    <input type="text" placeholder="language" name="language">
+    <br>
+    <input type="text" placeholder="style" name="style">
+    <br>
+    <br>
+    <input type="submit" value="submit" id="saveBtn">
+</form>
+<br>
+<div id="hel">Ok</div>
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal"
+    data-whatever="@getbootstrap">Add Iteam</button>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form action="{% url 'table' %}" method="post">
+                {% csrf_token %}
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Please Fill Detail</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="title-name" class="col-form-label">Title:</label>
+                        <input type="text" class="form-control" id="title-name" name="title">
+                    </div>
+                    <div class="form-group">
+                        <label for="body-text" class="col-form-label">Body:</label>
+                        <textarea class="form-control" id="body-text" name="body"></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <input type="submit" class="btn btn-primary" value="Save">
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block jsblock %}
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+
+<!-- <script>
+    $.ajax({
+        type: 'GET',
+        dataType: "json",
+        url: '../api/snippets/?format=json',
+        dataSrc: "",
+        success: function (data, status, xhr) {
+            console.log('data: ', data);
+    
+            $(document).ready(function () {
+                $('#example').DataTable({
+                    ajax: data,
+                    columns: [
+                        { data: 'name' },
+                        { data: 'position' },
+                        { data: 'office' },
+                        { data: 'extn' },
+                        { data: 'start_date' },
+                        { data: 'salary' },
+                    ],
+                });
+            });
+
+
+        }
+    });
+
+</script> -->
+
+<script>
+            //document.getElementById("hel").createAttribute("data-target", "#exampleModal");
+
+
+    $.ajax({
+        type: "GET",
+        url: '../api/snippets/?format=json',
+        dataType: 'json',
+        success: function (obj, textstatus) {
+            $('#example').DataTable({
+                data: obj,
+                columns: [
+                    { data: 'id' },
+                    { data: 'title' },
+                    { data: 'code' },
+                    { data: 'linenos' },
+                    { data: 'language' },
+                    { data: 'style' },
+                    
+                ]
+            });
+                $(".even").attr("data-target", "#exampleModal");
+                $(".even").attr("data-toggle", "modal"); 
+        },
+        error: function (obj, textstatus) {
+            alert(obj.msg);
+        }
+    });
+
+</script>
+
+<script>
+    $(document).ready(function () {
+        $("#post-form").submit(function (event) {
+            event.preventDefault();
+            $.ajax({
+                url: '../api/snippets/',
+                type: "POST",
+                data: $('#post-form').serialize(),
+                success: function (data) {
+                    console.log(data);
+                },
+                error: function (data) {
+                    console.log("error");
+                }
+            });
+        });
+    });
+</script>
+
+{% endblock %}

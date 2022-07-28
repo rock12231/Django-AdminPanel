@@ -66,3 +66,10 @@ class ArticleDetailView(View):
 #     model = Article
 #     template_name = "datatable/article_detail.html"
      
+     
+class Ajaxpage(View):
+    def get(self, request):
+        return render(request, 'datatable/ajaxhtml.html')
+
+    def post(self, request):
+        return render(request, 'datatable/ajaxhtml.html')

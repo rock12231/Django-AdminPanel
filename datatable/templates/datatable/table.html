@@ -17,6 +17,15 @@
             <div class="card">
                 <div class="card-body">
 
+                    <!-- Modal start -->
+                    {% include "datatable/modal.html" %}
+                    <!-- Button trigger modal -->
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#staticBackdrop">
+                        Launch static backdrop modal
+                    </button>
+
+                    <!-- Modal end  -->
+
                     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal"
                         data-whatever="@getbootstrap">Add Iteam</button>
 
@@ -315,10 +324,32 @@
                 </div>
             </div>
         </div>
-
+        <div>
+            <button onclick="Fun();">Ok</button>
+        </div>
     </div>
 </div>
-
+<script>
+    function Fun() {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                Swal.fire(
+                    'Deleted!',
+                    'Your file has been deleted.',
+                    'success'
+                )
+            }
+        })
+    }
+</script>
 
 {% endblock %}
 
@@ -397,12 +428,12 @@
 </script>
 <script>
     $.ajax({
-            type: 'GET',
-            dataType: "json",
-            url: '../api/snippets/?format=json',
-            success: function (data, status, xhr) {
-                console.log('data: ', data);
-            }
-        });
+        type: 'GET',
+        dataType: "json",
+        url: '../api/snippets/?format=json',
+        success: function (data, status, xhr) {
+            console.log('data: ', data);
+        }
+    });
 </script>
 {% endblock %}
